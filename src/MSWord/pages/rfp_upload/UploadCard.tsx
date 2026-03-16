@@ -76,7 +76,7 @@ export default function UploadedCard({
         className={`h-9 mt-4 ${
           status === "success"
             ? "bg-[#6657FF]"
-            : "bg-gray-400 cursor-not-allowed"
+            : "bg-gray-400 "
         }`}
       />
     </div>
