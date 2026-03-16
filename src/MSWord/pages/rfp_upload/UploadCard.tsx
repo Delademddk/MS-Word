@@ -69,10 +69,10 @@ export default function UploadedCard({
         </div>
       </div>
 
-      {/* {Button section} */}
       <Button
-        onClick={ generateChecklist}
-        text="Generate Compliance Checklist"
+        onClick={generateChecklist}
+        text="Generate Compliance Checklist"    
+        isDisabled={status !== "success"}   
         className={`h-9 mt-4 ${
           status === "success"
             ? "bg-[#6657FF]"

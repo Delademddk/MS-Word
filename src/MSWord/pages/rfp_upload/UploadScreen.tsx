@@ -34,23 +34,18 @@ export default function UploadScreen({ goToCompliance }: Props) {
     };
   }, []);
 
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+// Manage drag state to provide visual feedback when a file is dragged over the drop area
+  const beginDragAction = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragActive(true);
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragActive(true);
-  };
-
-  const handleDragLeave = () => {
+  const cancelDragAction = () => {
     setDragActive(false);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setDragActive(false);
+    cancelDragAction();
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setFile(e.dataTransfer.files[0]);
@@ -104,9 +99,9 @@ export default function UploadScreen({ goToCompliance }: Props) {
         <div
           className={`w-80 h-30.5 border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-2 p-3 transition
           ${dragActive ? "border-[#6657FF] bg-purple-50" : "border-gray-300"}`}
-          onDragEnter={handleDragEnter}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
+          onDragEnter={beginDragAction}
+          onDragOver={beginDragAction}
+          onDragLeave={cancelDragAction}
           onDrop={handleDrop}
         >
           <div className="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center">
