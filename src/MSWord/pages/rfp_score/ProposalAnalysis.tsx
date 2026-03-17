@@ -4,10 +4,6 @@ import RightArrow from "../../../assets/rightArrow.svg";
 type Breakdown = {
   title: string;
   percentage: string;
-  src: string;
-  alt: string;
-  src1: string;
-  alt1: string;
 };
 
 export default function ProposalCompleted() {
@@ -15,26 +11,14 @@ export default function ProposalCompleted() {
     {
       title: "Administrative",
       percentage: "100%",
-      src: BlueTick,
-      alt: "Blue tick",
-      src1: RightArrow,
-      alt1: "Right arrow",
     },
     {
       title: "Technical",
       percentage: "72%",
-      src: BlueTick,
-      alt: "Blue tick",
-      src1: RightArrow,
-      alt1: "Right arrow",
     },
     {
       title: "Legal",
       percentage: "80%",
-      src: BlueTick,
-      alt: "Blue tick",
-      src1: RightArrow,
-      alt1: "Right arrow",
     },
   ];
   return (
@@ -62,8 +46,8 @@ export default function ProposalCompleted() {
                 <div className="flex gap-2">
                   <img
                     className=" p-1 rounded bg-[#DBEAFE]"
-                    src={item.src}
-                    alt={item.alt}
+                    src={BlueTick}
+                    alt="Blue tick"
                   />
                   <p className="text-xs text-[#374151] font-medium">
                     {item.title}{" "}
@@ -73,7 +57,7 @@ export default function ProposalCompleted() {
                   <p className="text-xs font-bold text-[#1F2937">
                     {item.percentage}
                   </p>
-                  <img src={item.src1} alt={item.alt1} />
+                  <img src={RightArrow} alt="Right arrow" />
                 </div>
               </div>
               <div className="w-full bg-[#e0e0e0] border-8px h-1.5 rounded">
