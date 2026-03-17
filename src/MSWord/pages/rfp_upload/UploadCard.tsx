@@ -61,7 +61,7 @@ export default function UploadedCard({
                 <img src={ReloadIcon} alt="Reload Icon" />
               </button>
 
-              <button className="cursor-pointer p-1">
+              <button className="cursor-pointer p-1 ">
                 <img src={CloseIcon} alt="Close Icon" />
               </button>
             </>

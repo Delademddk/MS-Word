@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ScoreProposal from "./ScoreProposal";
-import ProposalCompleted from "./ProposalCompleted";
+import ProposalCompleted from "./ProposalAnalysis";
 
 export default function ScoreFlow() {
   const [currentStep, setCurrentStep] = useState(1);

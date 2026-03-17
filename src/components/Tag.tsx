@@ -20,8 +20,8 @@ const Tag: React.FC<TagProps> = ({ label, variant = "primary" }) => {
       color: "#b91c1c",
     },
     primary: {
-      backgroundColor: "#FDE68A",
-      color: "#166534",
+      backgroundColor: "#BFDBFE",
+      color: "#1E40AF",
     },
     success: {
       backgroundColor: "#DCFCE7",
