@@ -1,5 +1,5 @@
 import tick from "../../../assets/tick.svg";
-import CategoryItems from "./components/CategoryItems";
+import RequirementItems from "./components/RequirementItems";
 
 export default function ChecklistGenerated() {
   return (
@@ -19,7 +19,7 @@ export default function ChecklistGenerated() {
           </p>
         </div>
       </div>
-      <CategoryItems />
+      <RequirementItems />
     </div>
   );
 }
