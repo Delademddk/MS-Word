@@ -10,7 +10,7 @@ import {
   editFlaggedIssue,
 } from "../../api/flagIssueController";
 import { getFlaggedIssues } from "../../api/flagIssueController";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 
 export interface Issue {
@@ -23,12 +23,19 @@ export interface Issue {
 }
 
 export default function RfpFlagPage() {
-  const [flaggedIsssues, setFlaggedIsssues] =
-    useState<Issue[]>(getFlaggedIssues());
+  const [flaggedIsssues, setFlaggedIsssues] = useState<Issue[]>([]);
   const [selectedIssueId, setSelectedIssueId] = useState<string | null>(null);
 
-  function handleAddFlaggedIssues() {
-    addFlaggedIssue({
+  useEffect(() => {
+    async function loadIssues() {
+      const data = await getFlaggedIssues();
+      setFlaggedIsssues(data);
+    }
+    loadIssues();
+  }, []);
+
+  async function handleAddFlaggedIssues() {
+    await addFlaggedIssue({
       title: faker.book.title(),
       description: faker.lorem.sentence(6),
       risk: `Risk: ${faker.lorem.sentence(5)}`,
@@ -39,7 +46,8 @@ export default function RfpFlagPage() {
       ]),
       resolve: faker.datatype.boolean(),
     });
-    setFlaggedIsssues(getFlaggedIssues());
+    const updated = await getFlaggedIssues();
+    setFlaggedIsssues(updated);
   }
 
   const getTagVariant = (category: string): Variant => {
@@ -58,11 +66,13 @@ export default function RfpFlagPage() {
   return (
     <div className="p-4 ">
       <h2 className="text-sm font-semibold">Flagged Issues</h2>
-      <p className="text-[12px] text-[#6B7280]">3 items require attention</p>
+      <p className="text-[12px] text-[#6B7280]">
+        {flaggedIsssues.length} items require attention
+      </p>
       <div className="flex gap-3">
         <button onClick={handleAddFlaggedIssues}>Add</button>
         <button
-          onClick={() => {
+          onClick={async () => {
             if (!selectedIssueId) return;
             const issue = flaggedIsssues.find(
               (issue) => issue.id === selectedIssueId,
@@ -87,24 +97,27 @@ export default function RfpFlagPage() {
               category: category as "Ambiguous" | "Missing" | "Clarification",
             };
             editFlaggedIssue(updatedIssue);
-            setFlaggedIsssues(getFlaggedIssues());
+            const updated = await getFlaggedIssues();
+            setFlaggedIsssues(updated);
             setSelectedIssueId(null);
           }}
         >
           Edit
         </button>
         <button
-          onClick={() => {
+          onClick={async () => {
             if (!selectedIssueId) return;
-            deleteFlaggedIssue(selectedIssueId);
-            setFlaggedIsssues(getFlaggedIssues());
+            await deleteFlaggedIssue(selectedIssueId);
+
+            const updated = await getFlaggedIssues();
+            setFlaggedIsssues(updated);
             setSelectedIssueId(null);
           }}
         >
           Delete
         </button>
         <button
-          onClick={() => {
+          onClick={async () => {
             deleteAllFlaggedIssues();
             setFlaggedIsssues([]);
           }}

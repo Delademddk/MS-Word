@@ -1,44 +1,49 @@
 import { faker } from "@faker-js/faker";
 import type { Issue } from "../MSWord/pages/RfpFlagPage";
 
-//Get flagged issues
-export function getFlaggedIssues(): Issue[] {
-  return JSON.parse(localStorage.getItem("issues") || "[]");
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+//Get flagged issues
+export async function getFlaggedIssues(): Promise<Issue[]> {
+  await delay(1000);
+  return JSON.parse(localStorage.getItem("issues") || "[]");
 }
 
 //Get a flagged issue
-export function getFlaggedIssue(id: string): Issue | string {
-  const issues = getFlaggedIssues();
+export async function getFlaggedIssue(id: string): Promise<Issue>  {
+  await delay(1000);
+  const issues = await getFlaggedIssues();
   const issue = issues.find((issue) => issue.id === id);
   if (issue) {
     return issue;
   } else {
-    return "Did not find Issue";
+    throw new Error("Did not find Issue");
   }
 }
 
 //Delete flagged issue
-export function deleteFlaggedIssue(id: string) {
-  const issues = getFlaggedIssues();
+export async function deleteFlaggedIssue(id: string): Promise<void> {
+  await delay(1000);
+  const issues = await getFlaggedIssues();
   const filteredIssue = issues.filter((issue) => issue.id !== id);
   localStorage.setItem("issues", JSON.stringify(filteredIssue));
 }
 
 //Add flagged issue
-export function addFlaggedIssue(issue: Issue) {
-  const issues = getFlaggedIssues();
-  issues.push({...issue, id: faker.string.uuid()});
+export async function addFlaggedIssue(issue: Issue): Promise<void> {
+  await delay(1000);
+  const issues =  await getFlaggedIssues();
+  issues.push({ ...issue, id: faker.string.uuid() });
   localStorage.setItem("issues", JSON.stringify(issues));
-  
 }
 
 //Edit/Update flagged issue
-export function editFlaggedIssue(editedIssue: Issue) {
-  const issues = getFlaggedIssues();
+export async function editFlaggedIssue(editedIssue: Issue): Promise<void> {
+  await delay(1000);
+  const issues = await getFlaggedIssues();
   const issue = issues.find((issue) => issue.id === editedIssue.id);
   if (!issue) {
-    return "Did not find Issue";
+    throw new Error("Did not find Issue");
   } else {
     issue.title = editedIssue.title;
     issue.category = editedIssue.category;
@@ -46,11 +51,11 @@ export function editFlaggedIssue(editedIssue: Issue) {
     issue.risk = editedIssue.risk;
     issue.resolve = editedIssue.resolve;
   }
-    localStorage.setItem("issues", JSON.stringify(issues));
-
+  localStorage.setItem("issues", JSON.stringify(issues));
 }
 
 //Delete all
-export function deleteAllFlaggedIssues(){
-    localStorage.setItem("issues", JSON.stringify([]))
+export async function deleteAllFlaggedIssues(): Promise<void> {
+  await delay(1000);
+  localStorage.setItem("issues", JSON.stringify([]));
 }
